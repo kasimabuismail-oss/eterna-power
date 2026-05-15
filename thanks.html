@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Thank you — ETERNAPOWER</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="logo.svg" type="image/svg+xml" />
+    <style>
+      .thanks {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 2rem 1.25rem 3rem;
+      }
+      .thanks-card {
+        max-width: 28rem;
+        text-align: center;
+        padding: 2.25rem 1.75rem;
+        border-radius: var(--radius);
+        border: 1px solid var(--glass-border);
+        background: rgb(12 18 24 / 0.65);
+        backdrop-filter: blur(12px);
+        box-shadow: var(--shadow);
+      }
+      .thanks-card h1 {
+        margin: 0 0 0.75rem;
+        font-family: "Instrument Serif", Georgia, serif;
+        font-weight: 400;
+        font-size: 1.85rem;
+      }
+      .thanks-card p {
+        margin: 0 0 1.5rem;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="video-layer" aria-hidden="true">
+      <div class="video-scrim" style="position: absolute; inset: 0"></div>
+    </div>
+    <main class="thanks">
+      <div class="thanks-card">
+        <h1>Message received</h1>
+        <p>Thank you for contacting ETERNAPOWER. We will get back to you shortly.</p>
+        <a class="btn btn-primary" href="index.html">Back to home</a>
+      </div>
+    </main>
+  </body>
+</html>
