@@ -20,6 +20,10 @@
 
 html {
   scroll-behavior: smooth;
+  background-color: var(--bg-deep);
+  /* Disable rubber-band/elastic overscroll so Safari can't expose the
+     fixed video layer past the top/bottom of the document. */
+  overscroll-behavior: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -35,7 +39,10 @@ body {
   font-size: 1rem;
   line-height: 1.58;
   color: var(--text);
-  background: var(--bg-deep);
+  /* Body must stay transparent so the negative-z-index .video-layer is
+     visible through it. The dark canvas color lives on <html>. */
+  background: transparent;
+  overscroll-behavior: none;
 }
 
 .video-layer {
@@ -43,6 +50,10 @@ body {
   inset: 0;
   z-index: -2;
   overflow: hidden;
+  /* Promote the layer to its own compositor surface so Safari keeps the
+     video and scrim transformed together during overscroll. */
+  transform: translateZ(0);
+  background-color: var(--bg-deep);
 }
 
 .hero-video {
@@ -73,6 +84,10 @@ body {
       rgb(12 18 24 / 0.97) 100%
     );
   pointer-events: none;
+  /* Match the parent's compositing so the gradient stays glued to the
+     video plane during Safari rubber-band bounces. */
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 .skip-link {
