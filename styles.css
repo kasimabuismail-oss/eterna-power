@@ -24,6 +24,12 @@ html {
   /* Disable rubber-band/elastic overscroll so Safari can't expose the
      fixed video layer past the top/bottom of the document. */
   overscroll-behavior: none;
+  /* Prevent any accidental horizontal overflow (e.g. from long words,
+     wide media, or tight nav rows on small phones) from making the
+     whole page scroll sideways and exposing the body edge past the
+     sticky header background. `clip` is preferred over `hidden` so it
+     doesn't create a new scroll container that would break sticky. */
+  overflow-x: clip;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -43,6 +49,7 @@ body {
      visible through it. The dark canvas color lives on <html>. */
   background: transparent;
   overscroll-behavior: none;
+  overflow-x: clip;
 }
 
 .video-layer {
@@ -125,6 +132,9 @@ body {
   justify-content: space-between;
   gap: 1rem;
   padding-block: 0.85rem;
+  /* Allow flex children (brand + nav) to shrink below their content size
+     instead of forcing the row wider than the viewport on small phones. */
+  min-width: 0;
 }
 
 .brand {
@@ -133,6 +143,7 @@ body {
   gap: 0.65rem;
   text-decoration: none;
   color: var(--text);
+  min-width: 0;
 }
 
 .brand-logo {
@@ -150,6 +161,7 @@ body {
   display: flex;
   align-items: center;
   gap: 1rem;
+  min-width: 0;
 }
 
 .nav a {
@@ -623,11 +635,55 @@ body {
 }
 
 @media (max-width: 640px) {
+  .header-inner {
+    gap: 0.65rem;
+    padding-block: 0.7rem;
+  }
+
+  .brand {
+    gap: 0.5rem;
+  }
+
+  .brand-logo {
+    width: 36px;
+    height: 36px;
+  }
+
+  .brand-text {
+    font-size: 0.82rem;
+    letter-spacing: 0.03em;
+  }
+
   .nav {
     gap: 0.55rem;
   }
 
   .nav a {
     font-size: 0.82rem;
+  }
+
+  .nav-cta {
+    padding: 0.35rem 0.7rem;
+  }
+}
+
+@media (max-width: 420px) {
+  /* On the narrowest phones, drop the wordmark so the four nav links +
+     CTA never push the row past the viewport and clip the sticky header
+     background under "Contact". The logo alone still identifies the site. */
+  .brand-text {
+    display: none;
+  }
+
+  .nav {
+    gap: 0.4rem;
+  }
+
+  .nav a {
+    font-size: 0.78rem;
+  }
+
+  .nav-cta {
+    padding: 0.32rem 0.6rem;
   }
 }
