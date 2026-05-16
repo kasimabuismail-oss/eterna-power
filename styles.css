@@ -593,57 +593,24 @@ body {
   box-shadow: var(--shadow);
 }
 
-.contact-form {
-  display: grid;
-  gap: 1rem;
-}
-
-.field {
-  display: grid;
-  gap: 0.35rem;
-}
-
-.field-label {
+.contact-label {
+  margin: 0 0 0.45rem;
+  color: var(--muted);
   font-size: 0.86rem;
   font-weight: 600;
-  color: var(--muted);
 }
 
-.field input,
-.field textarea {
-  width: 100%;
-  padding: 0.65rem 0.85rem;
-  border-radius: 10px;
-  border: 1px solid var(--glass-border);
-  background: rgb(0 0 0 / 0.28);
+.contact-email {
   color: var(--text);
-  font-family: inherit;
-  font-size: 1rem;
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  text-decoration-color: rgb(126 184 224 / 0.55);
+  text-underline-offset: 0.18em;
 }
 
-.field textarea {
-  resize: vertical;
-  min-height: 6.5rem;
-}
-
-.field input:focus-visible,
-.field textarea:focus-visible {
-  outline: 2px solid rgb(126 184 224 / 0.7);
-  outline-offset: 1px;
-}
-
-.honeypot {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-  height: 0;
-  width: 0;
-}
-
-.btn-submit {
-  margin-top: 0.35rem;
-  width: 100%;
-  padding-block: 0.78rem;
+.contact-email:hover {
+  color: var(--accent);
 }
 
 .site-footer {
