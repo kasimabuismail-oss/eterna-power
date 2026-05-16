@@ -600,8 +600,9 @@ body {
   font-weight: 600;
 }
 
-.contact-email {
-  color: var(--text);
+.contact-email,
+.contact-email:visited {
+  color: var(--accent);
   font-size: clamp(1.35rem, 3vw, 2rem);
   font-weight: 700;
   letter-spacing: -0.03em;
@@ -609,8 +610,10 @@ body {
   text-underline-offset: 0.18em;
 }
 
-.contact-email:hover {
-  color: var(--accent);
+.contact-email:hover,
+.contact-email:focus-visible {
+  color: var(--text);
+  text-decoration-color: rgb(238 243 248 / 0.7);
 }
 
 .site-footer {
