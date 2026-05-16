@@ -121,18 +121,23 @@ body {
   position: sticky;
   top: 0;
   z-index: 50;
-  backdrop-filter: blur(14px);
-  background: rgb(12 18 24 / 0.35);
+  backdrop-filter: blur(22px) saturate(140%);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  /* Near-opaque so that content scrolled behind the sticky header
+     (especially visible through iOS Safari's translucent in-app preview
+     chrome) is not legible through it. A touch of translucency is kept
+     so the blur still reads as glass. */
+  background: rgb(12 18 24 / 0.92);
   border-bottom: 1px solid var(--glass-border);
   /* Honor the iOS safe-area / preview-chrome inset when present so the
      visible content of the header sits below any system chrome. */
   padding-top: env(safe-area-inset-top, 0px);
 }
 
-/* Extend the header's blurred background past its top edge. This sits
-   offscreen during normal browsing, but if iOS Safari's in-app preview
-   chrome (X / URL / ellipsis bar) leaves any gap above the sticky
-   header, this fills that gap so scrolled content can't show through. */
+/* Extend the header's background past its top edge as a safety net for
+   any iOS rendering pass (e.g. animated in-app preview chrome) that
+   could otherwise leave a sliver above the sticky header. Sits
+   offscreen during normal browsing. */
 .site-header::before {
   content: "";
   position: absolute;
@@ -140,8 +145,7 @@ body {
   right: 0;
   bottom: 100%;
   height: 100vh;
-  background: rgb(12 18 24 / 0.35);
-  backdrop-filter: blur(14px);
+  background: rgb(12 18 24 / 0.92);
   pointer-events: none;
 }
 
