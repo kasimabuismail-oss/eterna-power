@@ -124,6 +124,25 @@ body {
   backdrop-filter: blur(14px);
   background: rgb(12 18 24 / 0.35);
   border-bottom: 1px solid var(--glass-border);
+  /* Honor the iOS safe-area / preview-chrome inset when present so the
+     visible content of the header sits below any system chrome. */
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+/* Extend the header's blurred background past its top edge. This sits
+   offscreen during normal browsing, but if iOS Safari's in-app preview
+   chrome (X / URL / ellipsis bar) leaves any gap above the sticky
+   header, this fills that gap so scrolled content can't show through. */
+.site-header::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 100vh;
+  background: rgb(12 18 24 / 0.35);
+  backdrop-filter: blur(14px);
+  pointer-events: none;
 }
 
 .header-inner {
@@ -624,7 +643,7 @@ body {
 }
 
 .site-footer {
-  padding: 1.75rem 0 2.25rem;
+  padding: 1.75rem 0 calc(2.25rem + env(safe-area-inset-bottom, 0px));
   border-top: 1px solid var(--glass-border);
   color: rgb(238 243 248 / 0.45);
   font-size: 0.88rem;
