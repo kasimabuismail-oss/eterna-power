@@ -87,6 +87,36 @@
 
   initPageLoader();
 
+  const initMapLoader = () => {
+    const frame = document.querySelector(".map-frame");
+    if (!frame) {
+      return;
+    }
+    const iframe = frame.querySelector("iframe");
+    const loader = frame.querySelector(".map-loader");
+    if (!iframe || !loader) {
+      return;
+    }
+
+    const MAP_LOADER_MAX_MS = 20000;
+
+    const markLoaded = () => {
+      if (frame.classList.contains("is-loaded")) {
+        return;
+      }
+      frame.classList.add("is-loaded");
+      loader.setAttribute("aria-busy", "false");
+      window.setTimeout(() => {
+        loader.remove();
+      }, 500);
+    };
+
+    iframe.addEventListener("load", markLoaded);
+    window.setTimeout(markLoaded, MAP_LOADER_MAX_MS);
+  };
+
+  initMapLoader();
+
   const yearEl = document.getElementById("year");
   if (yearEl) {
     yearEl.textContent = String(new Date().getFullYear());

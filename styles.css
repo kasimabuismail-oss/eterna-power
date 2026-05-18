@@ -526,6 +526,7 @@ body.is-loading {
 }
 
 .map-frame {
+  position: relative;
   border-radius: var(--radius);
   overflow: hidden;
   border: 1px solid var(--glass-border);
@@ -533,11 +534,71 @@ body.is-loading {
   aspect-ratio: 16 / 9;
 }
 
+.map-loader {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem;
+  background: radial-gradient(
+      ellipse 70% 50% at 50% 42%,
+      rgb(88 133 168 / 0.12) 0%,
+      transparent 65%
+    ),
+    var(--bg-deep);
+  transition: opacity 0.45s ease, visibility 0.45s ease;
+}
+
+.map-frame.is-loaded .map-loader {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.map-loader__spinner {
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 2px solid rgb(255 255 255 / 0.12);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: map-spin 0.85s linear infinite;
+}
+
+@keyframes map-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.map-loader__label {
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
 .map-frame iframe {
   display: block;
   width: 100%;
   height: 100%;
   border: 0;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+
+.map-frame.is-loaded iframe {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .map-loader__spinner {
+    animation: none;
+    border-top-color: var(--accent);
+    opacity: 0.85;
+  }
 }
 
 .roadmap {

@@ -221,6 +221,16 @@
             </p>
           </header>
           <div class="map-frame">
+            <div
+              class="map-loader"
+              role="status"
+              aria-live="polite"
+              aria-busy="true"
+              aria-label="Loading map"
+            >
+              <span class="map-loader__spinner" aria-hidden="true"></span>
+              <span class="map-loader__label">Loading map…</span>
+            </div>
             <iframe
               title="Shakhrikhansay Canal region — map"
               loading="lazy"
