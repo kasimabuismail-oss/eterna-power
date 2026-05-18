@@ -1,4 +1,92 @@
 (function () {
+  const LOADER_MAX_MS = 12000;
+  const LOADER_MIN_MS = 450;
+
+  const initPageLoader = () => {
+    const loader = document.getElementById("page-loader");
+    if (!loader) {
+      return;
+    }
+
+    const body = document.body;
+    const video = document.querySelector(".hero-video");
+    const logo = document.querySelector(".brand-logo");
+    let finished = false;
+
+    const wait = (ms) =>
+      new Promise((resolve) => {
+        window.setTimeout(resolve, ms);
+      });
+
+    const waitForImage = (img) => {
+      if (!img) {
+        return Promise.resolve();
+      }
+      if (img.complete && img.naturalWidth > 0) {
+        return Promise.resolve();
+      }
+      return new Promise((resolve) => {
+        const done = () => {
+          img.removeEventListener("load", done);
+          img.removeEventListener("error", done);
+          resolve();
+        };
+        img.addEventListener("load", done);
+        img.addEventListener("error", done);
+      });
+    };
+
+    const waitForVideo = (el) => {
+      if (!el) {
+        return Promise.resolve();
+      }
+      if (el.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+        return Promise.resolve();
+      }
+      return new Promise((resolve) => {
+        const done = () => {
+          ["loadeddata", "canplay", "canplaythrough", "error"].forEach((evt) => {
+            el.removeEventListener(evt, done);
+          });
+          resolve();
+        };
+        ["loadeddata", "canplay", "canplaythrough", "error"].forEach((evt) => {
+          el.addEventListener(evt, done);
+        });
+      });
+    };
+
+    const fontsReady =
+      document.fonts && typeof document.fonts.ready === "object"
+        ? document.fonts.ready.catch(() => {})
+        : Promise.resolve();
+
+    const hideLoader = () => {
+      if (finished) {
+        return;
+      }
+      finished = true;
+      loader.classList.add("is-hidden");
+      loader.setAttribute("aria-busy", "false");
+      body.classList.remove("is-loading");
+      window.setTimeout(() => {
+        loader.remove();
+      }, 650);
+    };
+
+    const assetsReady = Promise.all([
+      waitForVideo(video),
+      waitForImage(logo),
+      fontsReady,
+    ]);
+
+    Promise.race([assetsReady, wait(LOADER_MAX_MS)])
+      .then(() => wait(LOADER_MIN_MS))
+      .then(hideLoader);
+  };
+
+  initPageLoader();
+
   const yearEl = document.getElementById("year");
   if (yearEl) {
     yearEl.textContent = String(new Date().getFullYear());

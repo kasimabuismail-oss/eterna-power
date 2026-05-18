@@ -20,7 +20,45 @@
     <link rel="stylesheet" href="styles.css" />
     <link rel="icon" href="logo.svg" type="image/svg+xml" />
   </head>
-  <body>
+  <body class="is-loading">
+    <noscript>
+      <style>
+        body.is-loading {
+          overflow: auto;
+        }
+        #page-loader {
+          display: none;
+        }
+      </style>
+    </noscript>
+    <div
+      id="page-loader"
+      class="page-loader"
+      role="status"
+      aria-live="polite"
+      aria-busy="true"
+      aria-label="Loading page"
+    >
+      <div class="page-loader__core">
+        <div class="page-loader__ripples" aria-hidden="true">
+          <span class="page-loader__ring"></span>
+          <span class="page-loader__ring"></span>
+          <span class="page-loader__ring"></span>
+        </div>
+        <img
+          class="page-loader__logo"
+          src="logo.svg"
+          width="56"
+          height="56"
+          alt=""
+        />
+      </div>
+      <p class="page-loader__label">ETERNAPOWER</p>
+      <div class="page-loader__bar" aria-hidden="true">
+        <span class="page-loader__bar-fill"></span>
+      </div>
+    </div>
+
     <div class="video-layer" aria-hidden="true">
       <video
         class="hero-video"
